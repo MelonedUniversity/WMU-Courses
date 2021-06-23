@@ -53,6 +53,11 @@ class Sum extends SumMonoid {public int value;}
 可见，`Sum`满足结合律、左幺元和右幺元：
 
 ```Java
+var S1 = new Sum() {{value = 1;}};
+var S2 = new Sum() {{value = 2;}};
+var S3 = new Sum() {{value = 3;}};
+
+
 var expr1 = S1.mappend(S2.mappend(S3));//Sum value=6
 var expr2 = S3.mappend(S1.mappend(S2));//Sum value=6
 
