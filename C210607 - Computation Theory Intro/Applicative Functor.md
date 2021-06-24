@@ -1,47 +1,62 @@
-# $λ$ - Calculus
+# Applicative Functor
 
-λ演算
+应用函子
 
 ## 概要
 
-**λ - Calculus**（λ：\\'læmdə\）是一种研究函数的形式化系统，能表达任意类型的计算过程，因而具有图灵完备性，可看作最简单的程序设计语言。
+**应用函子**是函子的增强版本，它允许被容器包装的函数对容器的值进行变换，并新增了一个用于包装值的函数。
 
-本文仅介绍无类型λ演算。
+## 接口表述
 
-## 介绍
+所有的应用函子都是函子，也就是说，一个容器要想成为应用函子，那么它首先需要成为函子。我们使用如下接口构造应用函子：
 
-下面我们来看一个简单的**λ项**$^{*1}$：  
-$λx.\ x+1$
+```Kotlin
+interface Applicative<T : Kind<T, *>> : Functor<T> {
+    override fun <A, B> Kind<T, A>.fmap(f: (A) -> B): Kind<T, B> = this.ap(f.pure())
 
-其中， $λ$ 表示一个函数的开始，而 $λx.$ 则表示将变量 $x$ **绑定**（binding）到函数体 $x+
-1$ 上（即该 $x$ 的作用域被限定为 $x+1$ ），$x+1$ 是函数体。  
+    fun <A> A.pure(): Kind<T, A>
+    fun <A, B> Kind<T, A>.ap(af: Kind<T, (A) -> B>): Kind<T, B>
+}
+```
 
-看起来可能不是很好懂，实际上这种表示形式和你所熟知的 $f(x)=x+1$ 是等价的。
+其中，`pure`函数用于把一个`A`类型的值包装成`T<A>`类型的值，`ap`函数接收一个包装在容器`T`中的函数，并通过该函数将`T<A>`变换到`T<B>`。一旦有了`pure`和`ap`，那么`fmap`就是不必要的了，因为`pure`和`ap`能构造出`fmap`。可见，应用函子是函子的增强。
 
-**函数应用**（Function applictaion）是指将函数作用到一个或一些值上，表示为 $f(a)$ ，其中 $a$ 为**参数**（Argument）。例如 $f(1)$ 即为一个函数应用，读作 “将函数 $f$ 作用于值 $1$ ”。
+回到之前`Box<V>`的例子，`BoxApplicative<V>`就可以抽象如下：
 
-λ演算的函数应用表示为：  
-$(λx.\ x+1)\ a$
+```Kotlin
+@Suppress("unchecked_cast")
+interface BoxApplicative<V> : Applicative<BoxApplicative<*>>, Kind<BoxApplicative<*>, V> {
+    override fun <A> A.pure(): Kind<BoxApplicative<*>, A> = Box<A>(this) as Kind<BoxApplicative<*>, A>
 
-括号是为了将函数体和参数 $a$ 区分开而添加的，所以该应用也可以表示为 $((λx.\ x+1))\ a$，若取 $a=2$，则该λ项的**归约**$^{*2}$结果为 $2$。由于 $a$ 是独立于λ项 $(λx.\ x+1)$ 而存在的，即它没有被绑定，所以被称作**自由变量**。
+    override fun <A, B> Kind<BoxApplicative<*>, A>.ap(af: Kind<BoxApplicative<*>, (A) -> B>): Kind<BoxApplicative<*>, B> {
+        val a = (this as Box<A>).value
+        val f = (af as Box<(A) -> B>).value
+        return Box<B>(f(a)) as Kind<BoxApplicative<*>, B>
+    }
+}
+```
+
+由于应用函子都是函子，所以`Box<V>`继承`BoxApplicative<V>`后仍是函子：
+
+```Kotlin
+object WithBoxApplicative : BoxApplicative<Any>
+class Box<V>(val value: V) : BoxApplicative<V>, Kind<BoxApplicative<*>, V>
+```
+
+现在就可以把函数包装在`Box`容器内进行链式调用了：
+
+```Kotlin
+val B2 = Box<(Int) -> String> { x -> "Result is ${x + 1}" }
+val B3 = Box<(String) -> String> { x -> "Hey! $x" }
+
+val result = WithBoxApplicative.run {
+    1.pure().ap(B2).ap(B3)
+}
+println((result as Box).value)//Hey! Result is 2
+```
+
+不过受限于Kotlin的函数不能Currying，这里的Applicative并不能实现更复杂的函数组合（Functor也是如此）。
 
 ## Playground
 
-请计算λ表达式 $(λx.\ x+x+x)\ 1$ 的结果。
-
----
-
-### 注解
-
-1. 符合以下三种情况之一的，被称作λ项：
-
-   * 变量 $x$ 本身
-   * $(λx.\ E)$，其中 $E$ 必须是一个λ项
-   * $(E_1\ E_2)$，即函数应用，要求 $E_1$ 与 $E_2$ 均为λ项
-
-    为表述方便和上下文起见，可能把λ项称作**λ表达式**。
-
-2. 在λ演算中，归约（reduce）有以下两种形式：
-
-   * $α$ - 变换：对表达式中的变量绑定进行重命名，如 $λx.\ x$ 经 $α$ - 变换后可得 $λy.\ y$，这可以在某些时候避免名称冲突，变换前后表达式等价。
-   * $β$ - 归约：即对表达式化简，更严格的表述是 “用参数表达式代替绑定变量”，如 $(λx.\ x)\ a$ 经 $β$ - 归约后可得 $a$，实质上表达的是函数应用的概念。
+没有作业
