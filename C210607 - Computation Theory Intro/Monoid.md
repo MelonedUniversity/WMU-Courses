@@ -17,9 +17,9 @@
 
 ## 编程语言表述
 
-Monoid在编程中无处不在，它是实现Monad的基础，所以让我们从命令式语言的角度来看看Monoid。
+Monoid这种代数结构无处不在，现在让我们从命令式语言的角度来看看Monoid。
 
-如果用Java表述，那么Monoid接口长这样：
+如果用Java，那么Monoid接口长这样：
 
 ```Java
 interface Monoid<T> {
