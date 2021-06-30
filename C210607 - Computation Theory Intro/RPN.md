@@ -4,7 +4,7 @@
 
 ## 概要
 
-逆波兰表示法是一种将数学运算符后置的计算表达式，这种表示法省去了对括号的需要且算法实现极为简单，因而被广泛实现于计算器中。
+逆波兰表示法是一种将数学运算符后置的计算表达式，这种表示法省去了对括号的需要且算法实现极为简单，因而被广泛实现于商业计算器中。
 
 ## 问题引入
 
@@ -39,16 +39,15 @@ $3-(1-(3-2)/3-(1+2))$
 下面的Haskell代码演示了一个RPN解析器，它计算了我们上面讨论的RPN表达式：
 
 ```Haskell
-parser '+' (x : y : s) = (y + x) : s
-parser '-' (x : y : s) = (y - x) : s
-parser '*' (x : y : s) = (y * x) : s
-parser '/' (x : y : s) = (y / x) : s
-parser ' ' s = s
-parser x s = (read [x]) : s
+parser "+" (x : y : s) = (y + x) : s
+parser "-" (x : y : s) = (y - x) : s
+parser "*" (x : y : s) = (y * x) : s
+parser "/" (x : y : s) = (y / x) : s
+parser " " s = s
+parser x s = (read x) : s
 
-calc e s = head $ foldl (\acc x -> parser x acc) s e
+calc e s = head $ foldl (\acc x -> parser x acc) s (words e)
 
-main :: IO ()
 main = do
   putStrLn . show . calc "3 1 3 2 - 3 / - 1 2 + - -" $ []
 ```
