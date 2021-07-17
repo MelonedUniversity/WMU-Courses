@@ -1,20 +1,20 @@
 # Continuation Passing Style
 
-续体传递风格
+续体传递风格$^{*1}$
 
 ## 概要
 
-**续体传递风格**是一种编程风格，它通过显式地使用函数来接管上一函数的结果来实现控制流$^{*1}$。以下简称CPS。
+**续体传递风格**是一种编程风格，它通过显式地使用函数来接管上一函数的结果来实现控制流$^{*2}$，在异常处理、协程、异步编程和编译等领域中有着非常广泛的应用。以下简称CPS。
 
 ## 应用序与正则序
 
 在命令式编程中，语句的编写顺序即为控制流，比如：
 
 ```JavaScript
-let a = (x) => x
-let b = (x) => x
-let c = (x) => x
-console.log(a(1) + b(2) + c(3))//6
+let a = 1
+let b = 2
+let c = 3
+console.log(a + b + c)//6
 ```
 
 上述代码如何执行？当然是先计算`a`，再计算`b`，然后计算`c`，最后执行`console.log`。  
@@ -41,7 +41,7 @@ console.log(
     c(3, c => a + b + c))))//6
 ```
 
-在CPS风格下，函数具有一个回调函数（Callback Function），该回调函数负责接管当前函数的计算结果并将其传递至下一次计算。如果对上述代码进行展开，那么应该类似于这个样子（伪代码）：
+在CPS风格下，函数具有一个被称为**计算续体**（Continuation）的回调函数（Callback Function），计算续体负责接管当前函数的计算结果并将其传递至下一次计算。如果对上述代码进行展开，那么应该类似于这个样子（伪代码）：
 
 ```JavaScript
 [a-> [b-> [c-> a+b+c ](3) ](2) ](1)
@@ -53,19 +53,19 @@ console.log(
 
 ```Haskell
 main = 
-  return 1 >>= (\a -> 
-  return 2 >>= (\b -> 
-  return 3 >>= (\c -> 
+  pure 1 >>= (\a -> 
+  pure 2 >>= (\b -> 
+  pure 3 >>= (\c -> 
   putStrLn . show $(a + b + c))))
 
 main = do
-  a <- return 1
-  b <- return 2
-  c <- return 3
+  a <- pure 1
+  b <- pure 2
+  c <- pure 3
   putStrLn . show $ a + b + c
 ```
 
-两种写法是等价的。
+两种写法完全等价。
 
 ## Playground
 
@@ -75,4 +75,5 @@ main = do
 
 ### 注解
 
-1. 计算机执行一个程序中语句的顺序。（引用自MDN）
+1. 另有其他的翻译形式：延续过渡风格/续延传递风格/后续传递风格...
+2. 计算机执行一个程序中语句的顺序。（引用自MDN）
