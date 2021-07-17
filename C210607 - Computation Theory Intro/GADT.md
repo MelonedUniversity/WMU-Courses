@@ -4,7 +4,7 @@
 
 ## 概要
 
-广义代数数据类型（又称一般化的代数数据类型）是ADT的增强版本，它允许在ADT的基础上通过为**值构造器**$^{*1}$（Value constructor或Data constructor）提供更加丰富的类型信息来完善类型约束，下文简称GADT。
+**广义代数数据类型**（又称一般化的代数数据类型）是ADT的增强版本，它允许在ADT的基础上通过为**值构造器**$^{*1}$（Value constructor或Data constructor）提供更加丰富的类型信息来完善类型约束，下文简称GADT。
 
 ## 介绍
 
