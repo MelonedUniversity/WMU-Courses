@@ -1,4 +1,4 @@
-# $Combinatory\ Logic$
+# Combinatory Logic
 
 组合子逻辑
 
