@@ -59,34 +59,34 @@ type<T<_>>
 考虑以下Java代码：
 
 ```Java
-public ArrayList<int> GetIntArrayList()
+public ArrayList<Integer> getIntArrayList()
 {
-    return new ArrayList<int>();
+    return new ArrayList<Integer>();
 }
-public HashSet<int> GetIntHashSet()
+public HashSet<Integer> getIntHashSet()
 {
-    return new HashSet<int>();
+    return new HashSet<Integer>();
 }
 ```
 
-上面的两个方法分别能够返回空的`ArrayList<int>`和`HashSet<int>`对象，但是如果我们需要更多类似于这样的函数，都要求它们能够返回一个包裹`int`的对象，例如`LinkedList<int>`、`TreeSet<int>`......显然我们不能写一一百个这样的不同名方法来支持这一百个不同类型的返回值类型，这太麻烦了，而且代码可读性不见得会很好。
+上面的两个方法分别能够返回空的`ArrayList<Integer>`和`HashSet<Integer>`对象，但是如果我们需要更多类似于这样的函数，都要求它们能够返回一个包裹`Integer`的对象，例如`LinkedList<Integer>`、`TreeSet<Integer>`......显然我们不能写一一百个这样的不同名方法来支持这一百个不同类型的返回值类型，这太麻烦了，而且代码可读性不见得会很好。
 
 高阶类型能解决这一问题。
 
 ```Java
-public <T<_>> T<int> GetIntContainer()
+public <T<_>> T<Integer> getIntContainer()
 {
-    return new T<int>();
+    return new T<Integer>();
 }
 ```
 
 现在，你只需要传入类型构造器即可获得相应的对象了：
 
 ```Java
-var arrayList = GetIntContainer<ArrayList>();//此处借鉴了C#的语法
-var linkedList = GetIntContainer<LinkedList>();
-var hashList = GetIntContainer<HashSet>();
-var treeList = GetIntContainer<TreeSet>();
+var arrayList = getIntContainer<ArrayList>();//此处借鉴了C#的语法
+var linkedList = getIntContainer<LinkedList>();
+var hashList = getIntContainer<HashSet>();
+var treeList = getIntContainer<TreeSet>();
 ...
 ...
 ```
