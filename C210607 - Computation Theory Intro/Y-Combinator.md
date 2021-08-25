@@ -1,4 +1,4 @@
-# $Y-Combinator$
+# Y Combinator
 
 $Y$ 组合子
 
@@ -56,14 +56,8 @@ $=g((λx.g(x\ x))\ (λx.g(x\ x))))$
 $=g(Y\ g)$  
 可知：$Y⇒Y=λf.f(Y f)$
 
-显然，问题得到了解决，我们的阶乘函数的λ表述为：
+显然，问题得到了解决，我们阶乘函数的λ表述为：
 
 $fac=(λf.((λx.f(x\ x))\ (λx.f(x\ x))))\ (λx.λf.(if\ x > 0\ then\ x*f(x-1)\ else\ 1))$
 
-可简记为：$fac=Y\ (λx.λf.(if\ x > 0\ then\ x*f(x-1)\ else\ 1))$，这并不影响函数的匿名性。
-
-## Playground
-
-没作业。
-
----
+可简记为 $fac=Y\ (λx.λf.(if\ x > 0\ then\ x*f(x-1)\ else\ 1))$，这并不影响函数的匿名性。

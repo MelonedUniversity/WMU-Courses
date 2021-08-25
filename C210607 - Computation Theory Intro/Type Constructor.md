@@ -25,9 +25,10 @@ ArrayList<Integer> list = new ArrayList<Integer>() {{
 
 更进一步地，对于相同的类型，它的类型构造器只能有一个，而值构造器可以有多个。不同的值构造器可以构造出不同的值，但这些值的类型都是其对应的类型构造器构造出的具体类型。
 
-这是什么意思呢？请看这个类型构造器`Tree`：
+这是什么意思呢？请看这个类型构造器`Tree`$^{*1}$：
 
 ```Java
+//代码样例1
 class Tree {}
 class Node extends Tree {}
 class Leaf extends Tree {}
@@ -36,8 +37,9 @@ class Leaf extends Tree {}
 `Node`和`Leaf`可以看作是类型构造器`Tree`的值构造器，它们可以构造出Node类型的值，也可以构造出Leaf类型的值，但这些值也都是Tree类型的。同样地，值构造器也可以具有参数（值参数），比如我们给Leaf的构造函数增加一个参数：
 
 ```Java
+//代码样例2
 class Leaf extends Tree {
-    private int val;
+    public int val;
     public Leaf(int val) {
         this.val = val;
     }
@@ -46,14 +48,12 @@ class Leaf extends Tree {
 
 我们可以构造代数（Algebra）的值构造器（如具有无参构造函数的Leaf），也可以构造函数的值构造器（如具有具参构造函数的Leaf）。
 
-## 形式化的类型构造器
-
 ## 更进一步的思考
 
 仔细想想，实际上值和函数没有什么区别，只不过前者是无参的，也是自调用（Self Invoking）的。  
 实际上函数和值构造器也没什么区别，因为它们都接收值，并且产生值。
 
-于是我们可以想象，值和值构造器应该也没有区别！
+于是我们可以想象，值和值构造器（在某个层次上）应该也没有区别！
 
 ```Java
 ArrayList<Integer> list = new ArrayList<Integer>();
@@ -63,7 +63,7 @@ ArrayList<Integer> list = new ArrayList<Integer>();
 
 那么对于`int i = 1;`，我们使用类型构造器`int`（只不过是无参的而已）构造了类型`int`，使用对应的值构造器构造了值`1`。而这个值`1`的值构造器实际上就是`1`，就像值`Leaf`的值构造器实际上就是`Leaf`一样（在构造函数无参的情况下）。
 
-显然值构造器和值在某种层面上是一致的，这个层面就是**类型**（Type）。类型是为了描述值$^{*1}$而存在的。
+显然值构造器和值在某种层面上是一致的，这个层面就是**类型**（Type）。类型是为了描述值$^{*2}$而存在的。
 
 甚至你可能有这样一种感觉：实际上类型构造器与函数也没什么区别，只不过它是类型层面上的函数而已。  
 如果把类型比作值，把类型构造器比作值构造器，那么我们也可以发现在某种层面上（例如无参的类型构造器）类型和类型构造器也具有一致性。
@@ -71,6 +71,20 @@ ArrayList<Integer> list = new ArrayList<Integer>();
 这种一致性由**阶**（Kind）来描述。  
 
 对于一个具体的类型，它的阶是 $*$，而对于一个需要有一个类型参数才能构造完全的类型（如`ArrayList<E>`），它的阶是 $*→*$，以此类推。
+
+## 形式化的类型构造器
+
+类型构造器实际上是类型函数。
+
+对于类型构造器`ArrayList<E>`，我们认为它接受一个类型参数E并产生一个类型A：
+
+`ArrayList<E>`$\ :=ΛE:*.\ A:*→*$
+
+对于类型构造器`Integer`，它不具有类型参数，因而是具体类型：
+
+`Integer`$\ :*$
+
+考虑恒等类型构造器 $ΛT:*.\ T:*→*$，它接收一个类型参数T并产生类型T。
 
 ## 高阶函数与高阶类型
 
@@ -93,6 +107,17 @@ public <T<_>> T<Integer> getIntContainer()
 
 如果我们给它类型参数`ArrayList<E>`，那么首先它的类型构造器会构造出类型`ArrayList<Integer>`，接着该类型的值构造器将构造出一个值，它是一个可存放`Integer`的空列表。
 
+## 于Kind之上
+
+能否有事物能描述Kind的统一性？
+
+我们认为所有Kind都取自集合 $\mathbb{K}$，而 $\mathbb{K}=\{*,\ \mathbb{K}→\mathbb{K}\}$。因而对于 $\mathbb{K}$，其中所有的Kind都具有相同的“类型”，它就是 $□$ 。注意这个 $□$ 不是指Type的那个 $□$ 。
+
+于是：  
+$T:*\ :\ □$  
+$ΛT_1:*.\ T_2:*→*\ :\ □$  
+$ΛF:*→*.\ ΛX:*.\ F\ X:(*→*)→*\ :\ □$
+
 ## In λ Cube
 
 在λ立方体中，类型构造器即为 $λ\underline{ω}$（Weak Lambda Omega），在 $λ\scriptsize{→}$ 的后面。
@@ -107,4 +132,14 @@ $(□,□)$ 表示 $λ\underline{ω}$ 允许由类型构造类型。
 
 ### 注解
 
-1. 广义的值，一切具有类型的东西，都是值。
+1. 可能通过Haskell描述能看地更加清楚一些：
+
+   ```Haskell
+   data Tree = Node | Leaf --对应代码样例1
+   ```
+
+   ```Haskell
+   data Tree = Node | Leaf Int --对应代码样例2
+   ```
+
+2. 广义的值，一切具有类型的东西，都是值。
