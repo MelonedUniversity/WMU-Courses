@@ -97,7 +97,7 @@ $ΛF:*→*.\ ΛX:*.\ F\ X\ :\ (*→*)→*$
 比如在高阶类型那一章我们构造的（实际上它是一个值构造器）：
 
 ```Java
-public <T<_>> T<Integer> getIntContainer()
+public <T<_>> T<Integer> getIntegerContainer()
 {
     return new T<Integer>();
 }
@@ -115,7 +115,7 @@ public <T<_>> T<Integer> getIntContainer()
 
 于是：  
 $T:*\ :\ □$  
-$ΛT_1:*.\ T_2:*→*\ :\ □$  
+$ΛA:*.\ B:*→*\ :\ □$  
 $ΛF:*→*.\ ΛX:*.\ F\ X:(*→*)→*\ :\ □$
 
 ## In λ Cube
