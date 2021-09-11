@@ -64,7 +64,7 @@ $if:=λp:α.\ λa:α.\ λb:α.\ p\ a\ b$
 
 $λ$ 立方体（Lambda Cube）描述了不同类型系统之间的关系，自左下角至右上角，类型系统的表达能力逐渐增强。
 
-<img style="background:white;" src="resources/lambda_cube.svg" width="256px">
+<img style="background:white;" src="resources/STLC/lambda_cube.svg" width="256px">
 
 在λ立方体中，$λ\scriptsize{→}$ 居于最左下角，具有最基本（也是最弱）的表达能力。
 
