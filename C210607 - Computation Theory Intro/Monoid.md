@@ -72,4 +72,4 @@ $(N,-,0)$是一个幺半群吗？为什么？
 
 ### 注解
 
-1. 其中，$x○e=x$ 中的 $e$ 被称作**左幺元**（Left identity），$x○e=x$ 中的 $e$ 被称作**右幺元**（Right identity）。
+1. 其中，$e○x=x$ 中的 $e$ 被称作**左幺元**（Left identity），$x○e=x$ 中的 $e$ 被称作**右幺元**（Right identity）。
