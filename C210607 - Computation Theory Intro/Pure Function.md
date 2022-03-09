@@ -42,7 +42,3 @@ void miaomiaomiao(){
 
 }
 ```
-
-## Playground
-
-今天没有作业。

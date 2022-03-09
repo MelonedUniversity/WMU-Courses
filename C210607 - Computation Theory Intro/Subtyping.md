@@ -23,10 +23,6 @@
 
 * ${\displaystyle T_{1}≤:S_1\quad S_2≤:T_{2} \over \displaystyle S_1→S_2≤:T_1→T_2}$，即对于 $S_1→S_2$，输入 $S_1$ 是逆变的，输出 $S_2$ 是协变的$^{*4}$。
 
-## Playground
-
-Nothing to play with.
-
 ---
 
 ### 注解

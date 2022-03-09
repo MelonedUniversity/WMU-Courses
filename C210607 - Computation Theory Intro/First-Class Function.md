@@ -101,7 +101,3 @@ main = do
 ```
 
 如果按照前面的写法来写就太简单了（甚至看起来和Python没什么区别），所以我增添了一个参数来充分体现Haskell的函数式语法。
-
-## Playground
-
-Nothing to play with.

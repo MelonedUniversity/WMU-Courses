@@ -94,10 +94,6 @@ t = Node (Node Empty 2 Empty) 1 (Node Empty 3 Empty)
 
 对ADT具有良好支持的语言不仅仅可以享受到构造ADT的精简语法，同时还能受益于类型安全带来的一系列优点。
 
-## Playground
-
-没作业。
-
 ---
 
 ### 注解

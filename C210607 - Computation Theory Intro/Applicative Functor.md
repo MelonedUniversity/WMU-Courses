@@ -56,7 +56,3 @@ println((result as Box).value)//Hey! Result is 2
 ```
 
 不过受限于Kotlin的函数不能Currying，这里的Applicative并不能实现更复杂的函数组合（Functor也是如此）。
-
-## Playground
-
-没有作业

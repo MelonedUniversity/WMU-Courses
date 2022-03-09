@@ -12,7 +12,7 @@
 
 大体如下：
 
-<img style="background:white;" src="resources/Bloom Filter/bloom_filter1.svg" width="400px">
+<img style="background:white;" src="res/bloom_filter1.svg" width="400px">
 
 其中，每个哈希函数的算法是不同的，但它们均能接受任意字符串的输入，并产生范围为<b>[0,N-1]</b>的输出。
 
@@ -20,7 +20,7 @@
 
 大体如下：
 
-<img style="background:white;" src="resources/Bloom Filter/bloom_filter2.svg" width="400px">
+<img style="background:white;" src="res/bloom_filter2.svg" width="400px">
 
 当然，我们可以选择更多的哈希函数和更大的二进制数组来调整布隆过滤器的精确程度。当哈希函数的数量M增加时，会在二进制数组上留下更多的标记，这相当于更详细地描述了模式$^{*2}$。当二进制数组的大小N增加时，我们将得到更大的哈希空间来描述模式，也提高了过滤的精确性。通过调整M与N的大小，我们便可以控制过滤的精确程度。
 

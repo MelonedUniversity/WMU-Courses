@@ -168,10 +168,6 @@ val i: Int = if (...) { 1 } else { 0 }
 ...//TODO
 ```
 
-## Playground
-
-今天没有作业。
-
 ---
 
 ### 注解

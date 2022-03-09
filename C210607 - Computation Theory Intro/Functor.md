@@ -80,10 +80,6 @@ println((result as Box).value)//Result is 2
 
 Awesome，`Box<Int>`成功地被变换为了`Box<String>`。
 
-## Playground
-
-没有作业
-
 ---
 
 ### FAQ
