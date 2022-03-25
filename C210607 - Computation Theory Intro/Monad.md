@@ -60,7 +60,7 @@ fun <A, B> Kind<T, A>.bind(mf: (A) -> Kind<T, B>): Kind<T, B> = this.fmap(mf).jo
     ```
 
 可以发现，Monad具有Monoid的一些特征。  
-其实，迄今我们讨论的Functor都是自函子，自然Monad也是。  
+其实，迄今我们讨论的Functor都是*自函子*（Endofunctor），自然Monad也是。  
 自然地，Monad就是自函子范畴上的幺半群了（是的，这是句废话233
 
 ## 应用
